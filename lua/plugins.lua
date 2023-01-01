@@ -1,0 +1,126 @@
+local function configfile(modulename)
+  return 'require("config.' .. modulename .. '")'
+end
+
+local function setup(modulename)
+  return 'require("' .. modulename .. '").setup()'
+end
+
+local maps = require('utils.map')
+
+return require('packer').startup(function(use)
+  -- Packer needs to know itself...
+  use { "wbthomason/packer.nvim" }
+
+  -- Essentials
+  use 'tpope/vim-surround'
+  use 'tpope/vim-fugitive'
+  use 'tpope/vim-unimpaired'
+  use 'mbbill/undotree'
+  use 'nvim-lua/plenary.nvim'
+  use 'nvim-tree/nvim-web-devicons'
+  use {
+    'numToStr/Comment.nvim',
+    config = setup('Comment')
+  }
+
+  use {
+    'windwp/nvim-autopairs',
+    config = setup('nvim-autopairs')
+  }
+
+  -- Git
+  use {
+    'lewis6991/gitsigns.nvim',
+    config = setup('gitsigns')
+  }
+
+  -- Syntax analysis
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = function()
+      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
+      ts_update()
+    end,
+    config = configfile('treesitter')
+  }
+
+  -- Pretty bars
+  use {
+    'nvim-lualine/lualine.nvim',
+    wants = 'nvim-web-devicons',
+    requires = {
+      'nvim-tree/nvim-web-devicons', opt = true
+    },
+    config = setup('lualine')
+  }
+  -- use {
+  --   'romgrk/barbar.nvim',
+  --   requires = {
+  --     'nvim-tree/nvim-web-devicons', opt = true
+  --   },
+  --   config = configfile('bufferline')
+  -- }
+
+  -- Colorscheme
+  use "EdenEast/nightfox.nvim"
+
+  -- LSP configuration
+  use {
+    'jose-elias-alvarez/null-ls.nvim',
+    requires = { { 'nvim-lua/plenary.nvim' } },
+    config = configfile("null_ls")
+  }
+  use {
+    'neovim/nvim-lspconfig',
+    config = configfile('lspconfig')
+  }
+  use {
+    'RRethy/vim-illuminate',
+    config = function()
+      local illum = require 'illuminate'
+      vim.keymap.set('n', '<C-n>', illum.goto_next_reference)
+      vim.keymap.set('n', '<C-p>', illum.goto_prev_reference)
+    end,
+  }
+
+  -- Completion
+  use 'hrsh7th/cmp-nvim-lsp'
+  use 'hrsh7th/cmp-buffer'
+  use 'hrsh7th/cmp-path'
+  use 'hrsh7th/cmp-cmdline'
+  use {
+    'hrsh7th/nvim-cmp',
+    config = configfile('cmp')
+  }
+  use 'hrsh7th/cmp-vsnip'
+
+  -- Snippets
+  use 'hrsh7th/vim-vsnip'
+
+  -- Telescope (extension config is done in the config.telescope module)
+  use {
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.0',
+    requires = { { 'nvim-lua/plenary.nvim' } },
+    config = configfile('telescope')
+  }
+  use { 'nvim-telescope/telescope-ui-select.nvim' }
+  use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
+  use {
+    "de-passage/telescope-makefile",
+    requires = {
+      { "akinsho/toggleterm.nvim" },
+      { 'nvim-telescope/telescope.nvim' }
+    },
+  }
+  use { "nvim-telescope/telescope-file-browser.nvim" }
+
+  -- Terminal
+  use {
+    "akinsho/toggleterm.nvim",
+    tag = '*',
+    config = configfile('toggleterm')
+  }
+
+end)
