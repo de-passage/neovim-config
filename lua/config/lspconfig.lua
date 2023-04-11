@@ -42,7 +42,7 @@ local extra_settings = {
 
 capabilities.offsetEncoding = { "utf-16" }
 
-for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'sumneko_lua', 'jdtls' }) do
+for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'jdtls', 'lua_ls' }) do
   local settings = {};
   if extra_settings[lspserver] ~= nil then
     settings = extra_settings[lspserver]

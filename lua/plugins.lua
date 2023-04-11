@@ -123,4 +123,15 @@ return require('packer').startup(function(use)
     config = configfile('toggleterm')
   }
 
+  use {
+    'github/copilot.vim',
+    config = configfile('copilot')
+  }
+
+  use {
+    "williamboman/mason.nvim",
+    run = ":MasonUpdate",
+    config = configfile('mason')
+  }
+
 end)
