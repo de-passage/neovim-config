@@ -16,6 +16,14 @@ cmp.setup({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-c>'] = cmp.mapping.abort(),
+    ['<C-Y>'] = cmp.mapping(function(fallback)
+      local copilot_keys = vim.fn["copilot#Accept"]()
+      if copilot_keys ~= "" then
+        vim.api.nvim_feedkeys(copilot_keys, "i", true)
+      else
+        fallback()
+      end
+    end, {'i'}),
     ['<C-j>'] = cmp.mapping(function(fallback)
       if vim.fn["vsnip#jumpable"](1) == 1 then
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-jump-next)", true, true, true), '', true)
@@ -27,13 +35,7 @@ cmp.setup({
       if vim.fn["vsnip#jumpable"](-1) == 1 then
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-jump-prev)", true, true, true), '', true)
       else
-        local copilot_keys = vim.fn["copilot#Accept"]()
-        if copilot_keys ~= "" then
-          vim.api.nvim_feedkeys(copilot_keys, "i", true)
-        else
-          cmp.mapping.confirm({ select = true })
-          fallback()
-        end
+        fallback()
       end
     end),
     ['<Esc>'] = cmp.mapping(function(fallback)
