@@ -32,6 +32,14 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   command = [[setlocal noundofile]]
 })
 
+local gdscriptgroup = vim.api.nvim_create_augroup('GDScriptAutocommands', { clear = true })
+-- Use tabs for GDScript files
+vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
+	group = gdscriptgroup,
+	pattern = { '*.gd' },
+	command = [[setlocal tabstop=2 shiftwidth=2 softtabstop=2 noexpandtab list]]
+})
+
 m.map({ 'i', 'n' }, '<C-s>', 'w')
 m.windowctl('<M-n>', 'keepjumps bn!')
 m.windowctl('<M-p>', 'keepjumps bN!')
