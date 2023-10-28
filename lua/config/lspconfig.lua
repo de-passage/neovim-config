@@ -37,12 +37,17 @@ local extra_settings = {
       },
     },
   },
+  purescriptls = {
+    purescript = {
+      addSpagoSources = true,
+    },
+  }
 }
 
 
 capabilities.offsetEncoding = { "utf-16" }
 
-for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'jdtls', 'lua_ls', 'gopls', 'glslls' }) do
+for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'jdtls', 'lua_ls', 'gopls', 'glslls', 'purescriptls' }) do
   local settings = {};
   if extra_settings[lspserver] ~= nil then
     settings = extra_settings[lspserver]

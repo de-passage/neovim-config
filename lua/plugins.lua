@@ -134,4 +134,6 @@ return require('packer').startup(function(use)
     config = configfile('mason')
   }
 
+  use 'purescript-contrib/purescript-vim'
+
 end)
