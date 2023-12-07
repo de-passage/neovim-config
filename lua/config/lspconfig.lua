@@ -1,5 +1,6 @@
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+require('neodev').setup()
 local lspconfig = require 'lspconfig'
 local lsp_keymaps = require 'utils.keymap'
 
@@ -10,6 +11,11 @@ vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '<space>Q', vim.diagnostic.setloclist, opts)
+
+vim.api.nvim_create_user_command('LspDiagnostics',
+  function (_)
+    vim.diagnostic.setqflist({ open = true })
+  end, {})
 
 local extra_settings = {
   jdtls = {
@@ -47,7 +53,7 @@ local extra_settings = {
 
 capabilities.offsetEncoding = { "utf-16" }
 
-for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'jdtls', 'lua_ls', 'gopls', 'glslls', 'purescriptls' }) do
+for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'jdtls', 'lua_ls', 'gopls', 'glslls', 'purescriptls', 'rust_analyzer', 'hls', 'asm_lsp' }) do
   local settings = {};
   if extra_settings[lspserver] ~= nil then
     settings = extra_settings[lspserver]

@@ -6,8 +6,6 @@ local function setup(modulename)
   return 'require("' .. modulename .. '").setup()'
 end
 
-local maps = require('utils.map')
-
 return require('packer').startup(function(use)
   -- Packer needs to know itself...
   use { "wbthomason/packer.nvim" }
@@ -54,16 +52,10 @@ return require('packer').startup(function(use)
     },
     config = setup('lualine')
   }
-  -- use {
-  --   'romgrk/barbar.nvim',
-  --   requires = {
-  --     'nvim-tree/nvim-web-devicons', opt = true
-  --   },
-  --   config = configfile('bufferline')
-  -- }
 
   -- Colorscheme
   use "EdenEast/nightfox.nvim"
+  use "Shirk/vim-gas"
 
   -- LSP configuration
   use {
@@ -83,6 +75,9 @@ return require('packer').startup(function(use)
       vim.keymap.set('n', '<C-p>', illum.goto_prev_reference)
     end,
   }
+  use {
+    'folke/neodev.nvim'
+  }
 
   -- Completion
   use 'hrsh7th/cmp-nvim-lsp'
@@ -101,7 +96,7 @@ return require('packer').startup(function(use)
   -- Telescope (extension config is done in the config.telescope module)
   use {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.0',
+    tag = '0.1.4',
     requires = { { 'nvim-lua/plenary.nvim' } },
     config = configfile('telescope')
   }
@@ -135,5 +130,34 @@ return require('packer').startup(function(use)
   }
 
   use 'purescript-contrib/purescript-vim'
+
+  -- Debugger support
+  use 'mfussenegger/nvim-dap'
+  use {
+    'theHamsta/nvim-dap-virtual-text',
+    requires = {
+       { "mfussenegger/nvim-dap" },
+    },
+  }
+
+  use {
+    'rcarriga/nvim-dap-ui',
+    requires = {
+      { "mfussenegger/nvim-dap" },
+    },
+  }
+
+  use {
+    "leoluz/nvim-dap-go",
+    config = setup('dap-go'),
+    requires = {
+      { "mfussenegger/nvim-dap" },
+    },
+  }
+
+  use {
+    'RaafatTurki/hex.nvim',
+    config = setup('hex')
+  }
 
 end)

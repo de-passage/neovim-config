@@ -32,6 +32,13 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   command = [[setlocal noundofile]]
 })
 
+local go_group = vim.api.nvim_create_augroup('GoAutocommands', { clear = true })
+vim.api.nvim_create_autocmd({ 'BufWrite' }, {
+  group = go_group,
+  pattern = { '*.go' },
+  command = [[silent! lua vim.lsp.buf.format()]]
+})
+
 local gdscriptgroup = vim.api.nvim_create_augroup('GDScriptAutocommands', { clear = true })
 -- Use tabs for GDScript files
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
