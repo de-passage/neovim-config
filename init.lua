@@ -1,5 +1,6 @@
 local m = require('utils.map')
 
+vim.o.errorformat = '%-Gmake[%*\\d]: *** [%f:%l:%m,' .. '%-Gmake: *** [%f:%l:%m,' .. vim.o.errorformat
 vim.o.number = true
 vim.o.incsearch = true
 vim.o.expandtab = true
