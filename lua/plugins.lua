@@ -53,10 +53,6 @@ return require('packer').startup(function(use)
     config = setup('lualine')
   }
 
-  -- Colorscheme
-  use "EdenEast/nightfox.nvim"
-  use "Shirk/vim-gas"
-
   -- LSP configuration
   use {
     'jose-elias-alvarez/null-ls.nvim',
@@ -169,5 +165,12 @@ return require('packer').startup(function(use)
     'RaafatTurki/hex.nvim',
     config = setup('hex')
   }
+
+  -- Colorscheme
+  use {
+    "EdenEast/nightfox.nvim",
+    config = configfile('nightfox')
+  }
+  use "Shirk/vim-gas"
 
 end)

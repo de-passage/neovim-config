@@ -15,15 +15,20 @@ cmp.setup({
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-u>'] = cmp.mapping.scroll_docs(-2),
+    ['<C-d>'] = cmp.mapping.scroll_docs(2),
+    ['<C-e>'] = cmp.mapping.scroll_docs(1),
     ['<C-c>'] = cmp.mapping.abort(),
     ['<C-Y>'] = cmp.mapping(function(fallback)
-      local copilot_keys = vim.fn["copilot#Accept"]()
-      if copilot_keys ~= "" then
-        vim.api.nvim_feedkeys(copilot_keys, "i", true)
-      else
-        fallback()
-      end
-    end, {'i'}),
+      cmp.mapping.scroll_docs(-1)(function()
+        local copilot_keys = vim.fn["copilot#Accept"]()
+        if copilot_keys ~= "" then
+          vim.api.nvim_feedkeys(copilot_keys, "i", true)
+        else
+          fallback()
+        end
+      end)
+    end, { 'i' }),
     ['<C-j>'] = cmp.mapping(function(fallback)
       if vim.fn["vsnip#jumpable"](1) == 1 then
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Plug>(vsnip-jump-next)", true, true, true), '', true)
@@ -76,38 +81,18 @@ cmp.setup({
     { name = 'nvim_lsp' },
     { name = 'vsnip' }, -- For vsnip users.
     { name = 'path' },
-    -- { name = 'luasnip' }, -- For luasnip users.
-    -- { name = 'ultisnips' }, -- For ultisnips users.
-    -- { name = 'snippy' }, -- For snippy users.
   }, {
     { name = 'buffer' },
     { name = 'nvim_lsp_signature_help' }
-  })
+  }),
+  experimental = {
+    ghost_text = false,
+  },
+  window = {
+    completion = {
+      border = 'single',
+      scrollbar = true,
+    },
+    documentation = { border = 'rounded' }
+  },
 })
-
-
--- Set configuration for specific filetype.
---cmp.setup.filetype('gitcommit', {
---  sources = cmp.config.sources({
---    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
---  }, {
---    { name = 'buffer' },
---  })
---})
-
--- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline({ '/', '?' }, {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = {
---     { name = 'buffer' }
---   }
--- })
---
--- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
--- cmp.setup.cmdline(':', {
---   mapping = cmp.mapping.preset.cmdline(),
---   sources = cmp.config.sources({
---     { name = 'path' }, { name = 'cmdline'}
---   }
---   )
--- })
