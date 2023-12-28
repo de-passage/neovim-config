@@ -79,6 +79,15 @@ return require('packer').startup(function(use)
     'folke/neodev.nvim'
   }
 
+  use {
+      "hedyhli/outline.nvim",
+      config = function()
+        vim.keymap.set("n", "<leader>v", "<cmd>Outline<cr>")
+        require("outline").setup {
+        }
+      end
+  }
+
   -- Completion
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-buffer'
@@ -88,6 +97,7 @@ return require('packer').startup(function(use)
     'hrsh7th/nvim-cmp',
     config = configfile('cmp')
   }
+  use 'hrsh7th/cmp-nvim-lsp-signature-help'
   use 'hrsh7th/cmp-vsnip'
 
   -- Snippets

@@ -43,11 +43,12 @@ vim.api.nvim_create_autocmd({ 'BufWrite' }, {
 local gdscriptgroup = vim.api.nvim_create_augroup('GDScriptAutocommands', { clear = true })
 -- Use tabs for GDScript files
 vim.api.nvim_create_autocmd({ 'BufNewFile', 'BufRead' }, {
-	group = gdscriptgroup,
-	pattern = { '*.gd' },
-	command = [[setlocal tabstop=2 shiftwidth=2 softtabstop=2 noexpandtab list]]
+  group = gdscriptgroup,
+  pattern = { '*.gd' },
+  command = [[setlocal tabstop=2 shiftwidth=2 softtabstop=2 noexpandtab list]]
 })
 
+-- Window navigation
 m.map({ 'i', 'n' }, '<C-s>', 'w')
 m.windowctl('<M-n>', 'keepjumps bn!')
 m.windowctl('<M-p>', 'keepjumps bN!')
@@ -56,9 +57,13 @@ m.windowctl('<M-j>', 'keepjumps wincmd j')
 m.windowctl('<M-k>', 'keepjumps wincmd k')
 m.windowctl('<M-l>', 'keepjumps wincmd l')
 
+-- Config edition
+vim.api.nvim_create_user_command('OpenConfig', [[e $MYVIMRC]], {})
+
 require 'plugins'
 vim.cmd('colorscheme duskfox')
 m.nmap('<leader>u', 'UndotreeToggle')
+m.nmap('<leader>d', vim.diagnostic.open_float)
 
 -- System clipboard support
 vim.o.clipboard = "unnamedplus"
