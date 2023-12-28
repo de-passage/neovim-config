@@ -5,8 +5,8 @@ local specs = {
 
 local groups = {
   all = {
-    NormalFloat = { bg = "bg1"},
-    FloatBorder = { bg = "bg1"},
+    NormalFloat = { bg = "bg1" },
+    FloatBorder = { bg = "bg1" },
   }
 }
 
@@ -21,3 +21,4 @@ nf.setup {
     dim_inactive = true
   }
 }
+vim.cmd[[colorscheme nightfox]]
