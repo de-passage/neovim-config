@@ -61,7 +61,7 @@ m.windowctl('<M-l>', 'keepjumps wincmd l')
 vim.api.nvim_create_user_command('OpenConfig', [[e $MYVIMRC]], {})
 
 require 'plugins'
-vim.cmd('colorscheme duskfox')
+vim.cmd('colorscheme nightfox')
 m.nmap('<leader>u', 'UndotreeToggle')
 m.nmap('<leader>d', vim.diagnostic.open_float)
 
