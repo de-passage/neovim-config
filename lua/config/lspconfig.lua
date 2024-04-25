@@ -12,8 +12,8 @@ require 'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all"
   ensure_installed = { "c", "lua", "rust", "cpp" },
 
-  ignore_install = { },
-  modules = { },
+  ignore_install = {},
+  modules = {},
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -71,13 +71,13 @@ local border_style = "rounded"
 require('lspconfig.ui.windows').default_options.border = 'single'
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover, {
-    border = border_style
-  })
+  border = border_style
+})
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
   vim.lsp.handlers.hover, {
-    border = border_style
-  })
+  border = border_style
+})
 
 vim.diagnostic.config({
   float = {
@@ -134,7 +134,7 @@ local extra_settings = {
 
 capabilities.offsetEncoding = { "utf-16" }
 
-for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'jdtls', 'lua_ls', 'gopls', 'glslls', 'purescriptls', 'rust_analyzer', 'hls', 'asm_lsp' }) do
+for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'jdtls', 'lua_ls', 'gopls', 'glslls', 'purescriptls', 'rust_analyzer', 'hls', 'asm_lsp', 'zls' }) do
   local settings = {};
   if extra_settings[lspserver] ~= nil then
     settings = extra_settings[lspserver]

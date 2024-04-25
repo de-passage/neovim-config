@@ -19,15 +19,20 @@ cmp.setup({
     ['<C-d>'] = cmp.mapping.scroll_docs(2),
     ['<C-e>'] = cmp.mapping.scroll_docs(1),
     ['<C-c>'] = cmp.mapping.abort(),
-    ['<C-Y>'] = cmp.mapping(function(fallback)
-      cmp.mapping.scroll_docs(-1)(function()
-        local copilot_keys = vim.fn["copilot#Accept"]()
-        if copilot_keys ~= "" then
-          vim.api.nvim_feedkeys(copilot_keys, "i", true)
-        else
-          fallback()
-        end
-      end)
+    ['<C-t>'] = cmp.mapping(function(fallback)
+      local copilot_keys = vim.fn["copilot#Accept"]()
+      if copilot_keys ~= "" then
+        vim.api.nvim_feedkeys(copilot_keys, "i", true)
+      else
+        fallback()
+      end
+    end),
+    ['<C-y>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.confirm({select=true})
+      else
+        fallback()
+      end
     end, { 'i' }),
     ['<C-j>'] = cmp.mapping(function(fallback)
       if vim.fn["vsnip#jumpable"](1) == 1 then
@@ -45,37 +50,10 @@ cmp.setup({
     end),
     ['<Esc>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.mapping.abort()
-        fallback()
-      else
-        fallback()
+        cmp.abort()
       end
-    end),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ['<space>'] = cmp.mapping(function(fallback)
-      cmp.mapping.confirm({ select = true })
       fallback()
     end),
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-        --      elseif luasnip.expand_or_jumpable() then
-        --        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-        --      elseif luasnip.jumpable(-1) then
-        --        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
