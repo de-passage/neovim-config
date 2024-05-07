@@ -172,5 +172,6 @@ return require('packer').startup(function(use)
     config = configfile('nightfox')
   }
   use "Shirk/vim-gas"
+  use "HiPhish/info.vim"
 
 end)
