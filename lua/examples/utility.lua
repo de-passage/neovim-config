@@ -92,4 +92,58 @@ function M.has_word_before()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+function M.show_in_float(what, opts)
+  opts = opts or {}
+  local focus_win = true
+  if opts.focus ~= nil then
+    focus_win = opts.focus
+  end
+  local height = 5
+  local type_what = type(what)
+  if type_what == 'table' then
+    height = math.min(math.max(#what, height), vim.o.lines - 4)
+  elseif type_what == 'function' then
+    what = what()
+    height = math.min(#what, height)
+  elseif type_what == 'string' then
+    what = { what }
+  end
+
+  local buffer = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_option(buffer, 'buftype', 'nofile')
+  vim.api.nvim_buf_set_lines(buffer, 0, -1, true, what)
+  vim.api.nvim_buf_set_option(buffer, 'modifiable', false)
+
+  local width = math.floor(vim.o.columns * 2 / 3)
+  local window = { id = nil, bufnr = buffer }
+  local line = math.floor(((vim.o.lines - height) / 2) - 1)
+  local col = math.floor((vim.o.columns - width) / 2) - 1
+
+  opts = vim.tbl_extend('keep', opts, {
+    relative = 'editor', -- editor, win, cursor, mouse
+    width = width,       -- h/w of the window itself, excluding border
+    height = height,
+    title_pos = 'center', -- left, center, right
+    border = 'rounded',   -- none, single, double, rounded, solid, shadow / { 'c', ... }, { {'c', 'HighlightGroup' }, ... }
+    row = line,           -- position of the window
+    col = col,
+  })
+
+  window.id = vim.api.nvim_open_win(buffer, focus_win, opts)
+
+  function window:close_popup()
+    vim.api.nvim_win_close(self.id, true)
+  end
+
+  vim.api.nvim_create_autocmd({ 'BufLeave' }, {
+    once = true,
+    buffer = buffer,
+    callback = function() window:close_popup() end,
+  })
+
+  vim.keymap.set('n', 'q', function() window:close_popup() end, { buffer = window.bufnr })
+  vim.keymap.set('n', '<esc>', function() window:close_popup() end, { buffer = window.bufnr })
+  return window
+end
+
 return M
