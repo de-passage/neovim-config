@@ -3,7 +3,7 @@
 ---@return string[]
 function string.split(str, match)
   local eol_char = 1
-  local start = 1
+  local start, stop = 1, 1
   local return_value = {}
 
   while start < #str do

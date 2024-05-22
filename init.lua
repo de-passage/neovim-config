@@ -56,6 +56,7 @@ m.windowctl('<M-h>', 'keepjumps wincmd h')
 m.windowctl('<M-j>', 'keepjumps wincmd j')
 m.windowctl('<M-k>', 'keepjumps wincmd k')
 m.windowctl('<M-l>', 'keepjumps wincmd l')
+m.nmap('<F5>', 'make | cwin 5')
 
 -- Config edition
 vim.api.nvim_create_user_command('OpenConfig', [[e $MYVIMRC]], {})

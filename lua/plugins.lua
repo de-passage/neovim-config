@@ -76,12 +76,12 @@ return require('packer').startup(function(use)
   }
 
   use {
-      "hedyhli/outline.nvim",
-      config = function()
-        vim.keymap.set("n", "<leader>v", "<cmd>Outline<cr>")
-        require("outline").setup {
-        }
-      end
+    "hedyhli/outline.nvim",
+    config = function()
+      vim.keymap.set("n", "<leader>v", "<cmd>Outline<cr>")
+      require("outline").setup {
+      }
+    end
   }
 
   -- Completion
@@ -138,18 +138,26 @@ return require('packer').startup(function(use)
   use 'purescript-contrib/purescript-vim'
 
   -- Debugger support
-  use 'mfussenegger/nvim-dap'
+  use {
+    'mfussenegger/nvim-dap',
+    config = configfile('dap')
+  }
   use {
     'theHamsta/nvim-dap-virtual-text',
     requires = {
-       { "mfussenegger/nvim-dap" },
+      { "mfussenegger/nvim-dap" },
     },
   }
 
   use {
     'rcarriga/nvim-dap-ui',
     requires = {
-      { "mfussenegger/nvim-dap" },
+      {
+        "mfussenegger/nvim-dap",
+      },
+      {
+        'nvim-neotest/nvim-nio',
+      }
     },
   }
 

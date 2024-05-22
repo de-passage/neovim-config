@@ -31,7 +31,9 @@ vim.keymap.set('n', '<leader>f', function() b.find_files {} end)
 vim.keymap.set('n', '<leader>b', function() b.buffers {} end)
 vim.keymap.set('n', '<leader>tf', function() b.grep_string {} end)
 vim.keymap.set('n', '<leader>tg', function() b.live_grep {} end)
-vim.keymap.set('n', '<leader>tt', function() b.builtin {} end)
+vim.keymap.set('n', '<leader>T', function() b.builtin {} end)
+vim.keymap.set('n', '<leader>th', b.help_tags)
+vim.keymap.set('n', '<leader>tr', b.resume)
 
 require 'telescope-makefile'.setup {
   -- The path where to search the makefile in the priority order

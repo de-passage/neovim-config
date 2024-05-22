@@ -32,7 +32,7 @@ local configurations =
         description = 'Print command output 1 screen at a time',
       }
     },
-    miDebuggerPath = "/free/tools/binutils/bin/gdb",
+    miDebuggerPath = "/gdb",
     MIMode = 'gdb'
   },
   {
@@ -103,14 +103,19 @@ local configurations =
 local adapters = {
   gdb = {
     type = 'executable',
-    command = 'gdb',
+    command = '/home/depassage/workspace/binutils-gdb/gdb/gdb',
     args = { '-i', 'dap' },
   },
   cppdbg = {
     id = 'cppdbg',
-    command = '/free/Workspace/s0111868/sysroot/usr/share/vscode-cpptools/debugAdapters/bin/OpenDebugAD7',
+    command = 'OpenDebugAD7',
     type = 'executable'
-  }
+  },
+  lldb = {
+    type = 'executable',
+    command = '/usr/bin/lldb-vscode-10',
+    name = 'lldb'
+  },
 }
 
 return {
