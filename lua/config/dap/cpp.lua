@@ -103,7 +103,7 @@ local configurations =
 local adapters = {
   gdb = {
     type = 'executable',
-    command = '/home/depassage/workspace/binutils-gdb/gdb/gdb',
+    command = 'gdb',
     args = { '-i', 'dap' },
   },
   cppdbg = {
@@ -113,7 +113,7 @@ local adapters = {
   },
   lldb = {
     type = 'executable',
-    command = '/usr/bin/lldb-vscode-10',
+    command = 'lldb-vscode',
     name = 'lldb'
   },
 }

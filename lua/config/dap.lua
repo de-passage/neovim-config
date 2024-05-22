@@ -28,6 +28,7 @@ nmap('<F6>', function() dap.continue() end)
 nmap('<F10>', function() dap.step_over() end)
 nmap('<F11>', function() dap.step_into() end)
 nmap('<F12>', function() dap.step_out() end)
+nmap('<F24>', function() dap.terminate() end)
 nmap('<Leader>ll', function() dap.toggle_breakpoint() end)
 nmap('<Leader>lL', function() dap.set_breakpoint() end)
 nmap('<Leader>lbp', function() dap.set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
@@ -45,7 +46,7 @@ dapui.setup {
 
 local function init_dapui()
   nmap('<m-u>', function() dap.up() end)
-  nmap('<m-d>', function() dap.up() end)
+  nmap('<m-d>', function() dap.down() end)
   map({ 'n', 'v' }, '<c-k>', function() dapui.eval() end)
   dapui.open()
 end
@@ -78,3 +79,4 @@ if vim.loop.fs_stat(filename) then
   end
 end
 
+pcall(require, 'config.local.dap')
