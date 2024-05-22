@@ -1,6 +1,6 @@
 local M = {}
 
--- find executables in the workspace data directory (intended to select files for nvim dap) 
+-- find executables in the workspace data directory (intended to select files for nvim dap)
 function M.find_executable(callback)
     local err = ""
     local result = ""
@@ -32,7 +32,6 @@ function M.find_executable(callback)
         end
       end
     })
-  end)
 end
 
 function M.map(mode, lhs, rhs, opts)
