@@ -78,3 +78,4 @@ if vim.fn.has('wsl') == 1 then
 end
 
 pcall(require, 'config.local')
+vim.cmd.colorscheme 'nightfox'
