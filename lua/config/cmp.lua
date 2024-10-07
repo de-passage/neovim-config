@@ -29,7 +29,7 @@ cmp.setup({
     end),
     ['<C-y>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.confirm({select=true})
+        cmp.confirm({ select = true })
       else
         fallback()
       end
@@ -47,19 +47,13 @@ cmp.setup({
       else
         fallback()
       end
-    end),
-    ['<Esc>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.abort()
-      end
-      fallback()
-    end),
+    end)
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'vsnip' }, -- For vsnip users.
     { name = 'path' },
-    { name = 'nvim_lsp_signature_help'},
+    { name = 'nvim_lsp_signature_help' },
   }, {
     { name = 'buffer' },
     { name = 'nvim_lsp_signature_help' }
