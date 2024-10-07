@@ -16,6 +16,8 @@ vim.o.foldnestmax = 3
 vim.o.foldminlines = 1
 vim.o.foldenable = false
 vim.o.undofile = true
+vim.o.list = true
+vim.o.listchars = [[tab:▸ ,trail:·,extends:»,precedes:«,nbsp:␣,space:.]]
 
 local basic_group = vim.api.nvim_create_augroup('BasicAutocommands', { clear = true })
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
