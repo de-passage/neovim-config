@@ -134,7 +134,12 @@ local extra_settings = {
 
 capabilities.offsetEncoding = { "utf-16" }
 
-for _, lspserver in ipairs({ 'clangd', 'bashls', 'jsonls', 'jedi_language_server', 'jdtls', 'lua_ls', 'gopls', 'glslls', 'purescriptls', 'rust_analyzer', 'hls', 'asm_lsp', 'zls' }) do
+local default_servers = {}
+local ok, local_config = pcall(require, 'config.local.lspconfig')
+if ok then
+  default_servers = vim.tbl_extend('force', default_servers, local_config.servers)
+end
+for _, lspserver in ipairs(default_servers) do
   local settings = {};
   if extra_settings[lspserver] ~= nil then
     settings = extra_settings[lspserver]
