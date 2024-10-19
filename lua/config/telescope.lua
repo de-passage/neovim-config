@@ -12,7 +12,7 @@ telescope.setup {
       override_generic_sorter = true, -- override the generic sorter
       override_file_sorter = true, -- override the file sorter
       case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-    }
+    },
   }
 }
 
@@ -35,6 +35,8 @@ vim.keymap.set('n', '<leader>T', function() b.builtin {} end)
 vim.keymap.set('n', '<leader>th', b.help_tags)
 vim.keymap.set('n', '<leader>tr', b.resume)
 
+vim.keymap.set('n', '<leader>tc', telescope.extensions.find_config.find_config )
+
 require 'telescope-makefile'.setup {
   -- The path where to search the makefile in the priority order
   makefile_priority = { '.', 'build/' },
@@ -46,3 +48,4 @@ telescope.load_extension('make')
 telescope.load_extension('ui-select')
 telescope.load_extension('fzf')
 telescope.load_extension('file_browser')
+telescope.load_extension('find_config')

@@ -71,13 +71,13 @@ local border_style = "rounded"
 require('lspconfig.ui.windows').default_options.border = 'single'
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover, {
-  border = border_style
-})
+    border = border_style
+  })
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
   vim.lsp.handlers.hover, {
-  border = border_style
-})
+    border = border_style
+  })
 
 vim.diagnostic.config({
   float = {
@@ -131,10 +131,17 @@ local extra_settings = {
   }
 }
 
+local extra_on_attach = {
+  clangd = function(client, bufnr)
+    lsp_keymaps.on_attach(client, bufnr)
+    require('utils.map').nmap('<m-o>','ClangdSwitchSourceHeader', { silent = true, buffer = bufnr })
+  end
+}
+
 
 capabilities.offsetEncoding = { "utf-16" }
 
-local default_servers = {}
+local default_servers = { "lua-language-server" }
 local ok, local_config = pcall(require, 'config.local.lspconfig')
 if ok then
   default_servers = vim.tbl_extend('force', default_servers, local_config.servers)
@@ -147,7 +154,7 @@ for _, lspserver in ipairs(default_servers) do
 
   lspconfig[lspserver].setup {
     capabilities = capabilities,
-    on_attach = lsp_keymaps.on_attach,
+    on_attach = extra_on_attach[lspserver] or lsp_keymaps.on_attach,
     settings = settings
   }
 end
