@@ -144,7 +144,8 @@ capabilities.offsetEncoding = { "utf-16" }
 local default_servers = { "lua-language-server" }
 local ok, local_config = pcall(require, 'config.local.lspconfig')
 if ok then
-  default_servers = vim.tbl_extend('force', default_servers, local_config.servers)
+  default_servers = vim.tbl_extend('force', default_servers, local_config.servers or {})
+  extra_settings = vim.tbl_extend('force', extra_settings, local_config.extra_settings or {})
 end
 for _, lspserver in ipairs(default_servers) do
   local settings = {};
