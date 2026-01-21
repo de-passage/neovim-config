@@ -55,7 +55,7 @@ return require('packer').startup(function(use)
 
   -- LSP configuration
   use {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     requires = { { 'nvim-lua/plenary.nvim' } },
     config = configfile("null_ls")
   }

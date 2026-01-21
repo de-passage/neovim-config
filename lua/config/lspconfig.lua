@@ -64,7 +64,6 @@ require 'nvim-treesitter.configs'.setup {
 }
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 require('neodev').setup()
-local lspconfig = require 'lspconfig'
 local lsp_keymaps = require 'utils.keymap'
 
 local border_style = "rounded"
@@ -104,7 +103,7 @@ local extra_settings = {
       home = "/usr/lib/jvm/java-1.17.0-openjdk-amd64/",
     }
   },
-  sumneko_lua = {
+  ['lua_ls'] = {
     Lua = {
       runtime = {
         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
@@ -141,21 +140,37 @@ local extra_on_attach = {
 
 capabilities.offsetEncoding = { "utf-16" }
 
-local default_servers = { "lua-language-server" }
+local default_servers = { "lua_ls" }
 local ok, local_config = pcall(require, 'config.local.lspconfig')
+local lsp_augroup = vim.api.nvim_create_augroup('LspAutocmds', {})
+
 if ok then
   default_servers = vim.tbl_extend('force', default_servers, local_config.servers or {})
   extra_settings = vim.tbl_extend('force', extra_settings, local_config.extra_settings or {})
 end
+
 for _, lspserver in ipairs(default_servers) do
   local settings = {};
   if extra_settings[lspserver] ~= nil then
     settings = extra_settings[lspserver]
   end
 
-  lspconfig[lspserver].setup {
+  vim.lsp.config(lspserver, {
     capabilities = capabilities,
-    on_attach = extra_on_attach[lspserver] or lsp_keymaps.on_attach,
+    -- on_attach = extra_on_attach[lspserver] or lsp_keymaps.on_attach,
     settings = settings
-  }
+  })
+
+  vim.lsp.enable(lspserver)
+
+  local run_on_attach = extra_on_attach[lspserver] or lsp_keymaps.on_attach
+
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = lsp_augroup,
+    callback = function(ev)
+      local bufnr = ev.buf
+      local client = vim.lsp.get_client_by_id(ev.data.client_id)
+      run_on_attach(client, bufnr)
+    end
+  })
 end
