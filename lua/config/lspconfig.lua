@@ -14,15 +14,6 @@ local lsp_keymaps = require 'utils.keymap'
 
 local border_style = "rounded"
 require('lspconfig.ui.windows').default_options.border = 'single'
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    border = border_style
-  })
-
-vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    border = border_style
-  })
 
 vim.diagnostic.config({
   float = {
@@ -34,8 +25,8 @@ vim.diagnostic.config({
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
 vim.keymap.set('n', '<space>d', vim.diagnostic.open_float, opts)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '[d', function() vim.diagnostic.jump { count = -1, float = true } end, opts)
+vim.keymap.set('n', ']d', function() vim.diagnostic.jump { count = 1, float = true } end, opts)
 vim.keymap.set('n', '<space>Q', vim.diagnostic.setloclist, opts)
 
 vim.api.nvim_create_user_command('LspDiagnostics',
@@ -79,7 +70,7 @@ local extra_settings = {
 local extra_on_attach = {
   clangd = function(client, bufnr)
     lsp_keymaps.on_attach(client, bufnr)
-    require('utils.map').nmap('<m-o>','ClangdSwitchSourceHeader', { silent = true, buffer = bufnr })
+    require('utils.map').nmap('<m-o>', 'ClangdSwitchSourceHeader', { silent = true, buffer = bufnr })
   end
 }
 

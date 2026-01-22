@@ -57,8 +57,8 @@ end
 function Window.split(...) return Window.horizontal_split(...) end
 
 ---@param buffer Buffer
----@return Window
 ---@overload fun(content: string[])
+---@return Window
 function Window.vertical_split(buffer)
   vim.cmd.split()
   local win = detail.make_new_win_object(vim.api.nvim_get_current_win())
@@ -103,6 +103,8 @@ end
 ---@param content string[]
 ---@param quit_on_leave boolean?
 ---@return Window
-function Window.temp_split(content, quit_on_leave) return Window.temp_horizontal_split(content, quit_on_leave) end
+function Window.temp_split(content, quit_on_leave)
+  return Window.temp_horizontal_split(content, quit_on_leave)
+end
 
 setmetatable(Window, metatbl)

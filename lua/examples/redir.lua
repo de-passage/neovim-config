@@ -14,9 +14,12 @@ function M.redir(func)
     error(err)
   else
     local results = vim.api.nvim_get_var('___dpsg_redir_output') ---@type string
+    --- @type integer | nil
     local eol_char = 1
     local start = 1
     local return_value = {}
+    --- @type integer | nil
+    local stop = 1
 
     while start < #results do
       eol_char, stop = results:find('\n', start)
