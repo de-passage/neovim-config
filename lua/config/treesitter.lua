@@ -7,7 +7,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufAdd', 'BufNew', 'BufNewFile', 'Buf
   end
 })
 
-require 'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.config'.setup {
   -- A list of parser names, or "all"
   ensure_installed = { "c", "lua", "rust", "cpp" },
 
