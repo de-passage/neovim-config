@@ -9,7 +9,7 @@ return {
       end
     })
 
-    require 'nvim-treesitter.config'.setup {
+    require 'nvim-treesitter'.setup {
       -- A list of parser names, or "all"
       ensure_installed = { "c", "lua", "rust", "cpp" },
 
