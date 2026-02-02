@@ -1,24 +1,28 @@
-local nf = require('nightfox')
+return {
+  setup = function()
+    local nf = require('nightfox')
 
-local specs = {
-}
+    local specs = {
+    }
 
-local groups = {
-  all = {
-    NormalFloat = { bg = "bg1" },
-    FloatBorder = { bg = "bg1" },
-  }
-}
+    local groups = {
+      all = {
+        NormalFloat = { bg = "bg1" },
+        FloatBorder = { bg = "bg1" },
+      }
+    }
 
-local palettes = {
-}
+    local palettes = {
+    }
 
-nf.setup {
-  groups = groups,
-  specs = specs,
-  palettes = palettes,
-  options = {
-    dim_inactive = true
-  }
+    nf.setup {
+      groups = groups,
+      specs = specs,
+      palettes = palettes,
+      options = {
+        dim_inactive = true
+      }
+    }
+    vim.cmd [[colorscheme nightfox]]
+  end
 }
-vim.cmd[[colorscheme nightfox]]

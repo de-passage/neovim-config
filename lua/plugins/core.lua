@@ -1,16 +1,9 @@
-local function configfile(modulename)
-  return 'require("config.' .. modulename .. '")'
-end
-
-local function setup(modulename)
-  return 'require("' .. modulename .. '").setup()'
-end
-
 return {
   -- Colorscheme
   {
     "EdenEast/nightfox.nvim",
-    config = configfile('nightfox')
+    main = 'config.nightfox',
+    opts = {}
   },
   -- Essentials
   { 'tpope/vim-surround' },
@@ -21,49 +14,51 @@ return {
   { 'nvim-tree/nvim-web-devicons' },
   {
     'numToStr/Comment.nvim',
-    config = setup('Comment')
+    opts = {}
   },
 
   {
     'windwp/nvim-autopairs',
-    config = setup('nvim-autopairs')
+    opts = {}
   },
 
   -- Git
   {
     'lewis6991/gitsigns.nvim',
-    config = setup('gitsigns')
+    opts = {}
   },
 
   -- Syntax analysis
   {
     'nvim-treesitter/nvim-treesitter',
-    run = function()
+    build = function()
       local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
       ts_update()
     end,
-    config = configfile('treesitter')
+    version = '*',
+    opts = {},
+    main = "config.treesitter"
   },
 
   -- Pretty bars
+  { 'nvim-tree/nvim-web-devicons' },
+
   {
     'nvim-lualine/lualine.nvim',
-    wants = 'nvim-web-devicons',
-    requires = {
-      'nvim-tree/nvim-web-devicons', opt = true
-    },
-    config = setup('lualine')
+    opts = {}
   },
 
   -- LSP configuration
   {
     'nvimtools/none-ls.nvim',
-    requires = { { 'nvim-lua/plenary.nvim' } },
-    config = configfile("null_ls")
+    opts = {},
+    main = 'config.null_ls' ,
+        
   },
   {
     'neovim/nvim-lspconfig',
-    config = configfile('lspconfig')
+    opts = {},
+    main = 'config.lspconfig'
   },
   {
     'RRethy/vim-illuminate',
@@ -81,8 +76,7 @@ return {
     "hedyhli/outline.nvim",
     config = function()
       vim.keymap.set("n", "<leader>v", "<cmd>Outline<cr>")
-      require("outline").setup {
-      }
+      require("outline").setup { }
     end
   },
 
@@ -95,7 +89,8 @@ return {
   { 'hrsh7th/cmp-vsnip' },
   {
     'hrsh7th/nvim-cmp',
-    config = configfile('cmp')
+    opts = {},
+    main = 'config.cmp'
   },
   { 'hrsh7th/cmp-nvim-lsp-signature-help' },
   { 'hrsh7th/cmp-vsnip' },
@@ -106,15 +101,17 @@ return {
   -- Telescope (extension config is done in the config.telescope module)
   {
     'nvim-telescope/telescope.nvim',
-    tag = '0.1.4',
-    requires = { { 'nvim-lua/plenary.nvim' } },
-    config = configfile('telescope')
+    opts = {},
+    main = 'config.telescope',
+    dependencies = {
+        { 'nvim-lua/plenary.nvim' },
+        { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    }
   },
   { 'nvim-telescope/telescope-ui-select.nvim' },
-  { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
   {
     "de-passage/telescope-makefile",
-    requires = {
+    dependencies = {
       { "akinsho/toggleterm.nvim" },
       { 'nvim-telescope/telescope.nvim' }
     },
@@ -124,19 +121,21 @@ return {
   -- Terminal
   {
     "akinsho/toggleterm.nvim",
-    tag = '*',
-    config = configfile('toggleterm')
+    version = '*',
+    opts = {}, 
+    main = 'config.toggleterm'
   },
 
   {
     'github/copilot.vim',
-    config = configfile('copilot')
+    opts = {}, 
+    main = 'config.copilot'
   },
 
   {
     "williamboman/mason.nvim",
-    run = ":MasonUpdate",
-    config = configfile('mason')
+    build = ":MasonUpdate",
+    opts = {}
   },
 
   { 'purescript-contrib/purescript-vim' },
@@ -144,18 +143,19 @@ return {
   -- Debugger support
   {
     'mfussenegger/nvim-dap',
-    config = configfile('dap')
+    opts = {}, 
+    main = 'config.dap'
   },
   {
     'theHamsta/nvim-dap-virtual-text',
-    requires = {
+    dependencies = {
       { "mfussenegger/nvim-dap" },
     },
   },
 
   {
     'rcarriga/nvim-dap-ui',
-    requires = {
+    dependencies = {
       {
         "mfussenegger/nvim-dap",
       },
@@ -167,17 +167,16 @@ return {
 
   {
     "leoluz/nvim-dap-go",
-    config = setup('dap-go'),
-    requires = {
+    opts = {},
+    dependencies = {
       { "mfussenegger/nvim-dap" },
     },
   },
 
   {
     'RaafatTurki/hex.nvim',
-    config = setup('hex')
+    opts = {}
   },
   { "Shirk/vim-gas" },
   { "HiPhish/info.vim" },
-
 }

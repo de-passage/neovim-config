@@ -63,7 +63,7 @@ m.nmap('<F5>', 'make | cwin 5')
 -- Config edition
 vim.api.nvim_create_user_command('OpenConfig', [[e $MYVIMRC]], {})
 
-require 'plugins'
+require 'config.lazy'
 
 m.nmap('<leader>u', 'UndotreeToggle')
 m.nmap('<leader>d', vim.diagnostic.open_float)
@@ -80,4 +80,3 @@ if vim.fn.has('wsl') == 1 then
 end
 
 pcall(require, 'config.local')
-vim.cmd.colorscheme 'nightfox'
