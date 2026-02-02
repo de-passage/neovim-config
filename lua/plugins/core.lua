@@ -31,10 +31,7 @@ return {
   -- Syntax analysis
   {
     'nvim-treesitter/nvim-treesitter',
-    build = function()
-      local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
-      ts_update()
-    end,
+    build = ':TSUpdate',
     lazy = false,
     opts = {},
     main = "config.treesitter"
@@ -53,7 +50,7 @@ return {
     'nvimtools/none-ls.nvim',
     opts = {},
     main = 'config.null_ls' ,
-        
+
   },
   {
     'neovim/nvim-lspconfig',
@@ -122,13 +119,13 @@ return {
   {
     "akinsho/toggleterm.nvim",
     version = '*',
-    opts = {}, 
+    opts = {},
     main = 'config.toggleterm'
   },
 
   {
     'github/copilot.vim',
-    opts = {}, 
+    opts = {},
     main = 'config.copilot'
   },
 
@@ -143,7 +140,7 @@ return {
   -- Debugger support
   {
     'mfussenegger/nvim-dap',
-    opts = {}, 
+    opts = {},
     main = 'config.dap'
   },
   {
